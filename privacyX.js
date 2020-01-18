@@ -152,6 +152,7 @@ const $ = window.jQuery;
                 border-radius:          10px;
                 max-width:              30em;
                 box-shadow:             1px 2px 4px rgba(0, 0, 0, 0.3);
+                overflow-y:               scroll;
             }
             #iconBox {
                 max-width:              1.5em;
