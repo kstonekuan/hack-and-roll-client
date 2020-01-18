@@ -63,16 +63,28 @@ const $ = window.jQuery;
                 if (clean){
                     output += '<tr class="tableRows">'
                     let rating = sentenceArray[i].rating;
-                    let ratingImgSrc = 'https://i.imgur.com/iRlDCDl.png';
+                    //let ratingImgSrc = 'https://i.imgur.com/iRlDCDl.png';
+                    let ratingImgSrc = 'https://i.imgur.com/nsB6tkz.png';
+                    //let ratingImgSrc = 'https://i.imgur.com/r6Ul8JZ.png';
                     if (rating < 0){
-                        ratingImgSrc = 'https://i.imgur.com/YJ347HA.png';
+                        //ratingImgSrc = 'https://i.imgur.com/YJ347HA.png';
+                        //ratingImgSrc = 'https://i.imgur.com/EPJd3Bu.png';
+                        ratingImgSrc = 'https://i.imgur.com/mkPw6cC.png';
                     }
                     else if (rating > 0){
-                        ratingImgSrc = 'https://i.imgur.com/O8nj3ca.png';
+                        //ratingImgSrc = 'https://i.imgur.com/O8nj3ca.png';
+                        //ratingImgSrc = 'https://i.imgur.com/2AiTzKj.png';
+                        ratingImgSrc = 'https://i.imgur.com/c6oqA2H.png';
                     }
                     let ratingImgCol = '<td class="ratingIconCol"><img class="ratingIconBox" src="' + ratingImgSrc + '"/></td>'
                     let sentenceCol = '<td class="sentenceCol"><div class="sentenceBox">' + sentenceArray[i].text + '</div></td>';
-                    output += ratingImgCol + sentenceCol;
+
+                    if (rating != 0){
+                        output += ratingImgCol + sentenceCol;
+                    }
+                    else{
+                        output += '<td/>' + sentenceCol;
+                    }
                     output += '</tr>'
                 }
             }
@@ -153,7 +165,6 @@ const $ = window.jQuery;
                 max-width:              30em;
                 max-height:             80%;
                 box-shadow:             1px 2px 4px rgba(0, 0, 0, 0.3);
-                overflow-y:             scroll;
             }
             #iconBox {
                 max-width:              1.5em;
@@ -171,6 +182,7 @@ const $ = window.jQuery;
                 border:                 0;
                 font-family:            'Karla';
                 font-size:              12px;
+                overflow-y:             scroll;
             }
 
             #displayTable{
@@ -198,7 +210,7 @@ const $ = window.jQuery;
                 vertical-align:         middle;
             }
             .ratingIconBox{
-                max-height:             1em;
+                max-height:             2em;
                 margin-top:             1em;
             }
         ` );
