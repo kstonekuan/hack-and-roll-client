@@ -22,7 +22,8 @@ const $ = window.jQuery;
         const privacy = /privacy|policy/gmi;
 
         // If we are on the right page then send url to the backend and receive the summarised text
-        if (($("h1").filter(function() {return privacy.test($(this).text())}).length > 0)) {
+        if (($("h1").filter(function() {return privacy.test($(this).text())})).length > 0
+        || ($("h2").filter(function() {return privacy.test($(this).text())})).length > 0) {
             const currentUrl = window.location.href;
             const backend = "https://52.74.226.98/?link=";
             // POST url to backend
@@ -73,7 +74,7 @@ const $ = window.jQuery;
         $('#myButton').on('click', () => {
             let zNode = createPopup('Finding privacy policy page...');
             document.body.appendChild(zNode);
-            //zNode.innerHTML = createPopup(findPrivacyLink());
+            zNode.innerHTML = createPopup(findPrivacyLink());
         });
 
         //--- Style our newly added elements using CSS.
