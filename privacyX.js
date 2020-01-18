@@ -53,21 +53,21 @@ const $ = window.jQuery;
 
         const cleanUp = (myJson) => {
 
-            let output = '<table id="statsTable" style="width:100%">';
+            let output = '<div id="statsTable" style="width:100%; display:flex; align-items:center;">';
 
             if (myJson.complexity_score > 0.5){
-                output += '<tr id="statsRow"><td class="statsIconCol">' + badIcon + '</td>' + '<td class="statsTextCol">Complex</td>';
+                output += '<div class="statsIconCol" style="flex:1">' + badIcon + '<div class="statsTextCol">Complex</div></div>';
             }
             else{
-                output += '<tr id="statsRow"><td class="statsIconCol">' + goodIcon + '</td>' + '<td class="statsTextCol">Simple</td>';
+                output += '<div class="statsIconCol" style="flex:1">' + goodIcon + '<div class="statsTextCol">Simple</div></div>';
             }
 
             let readable = (myJson.readability_score > 70) ? 1 : 0;
             if (!readable){
-                output += '<td class="statsIconCol">' + badIcon + '</td>' + '<td class="statsTextCol">Hard to Read</td></tr></table>';
+                output += '<div class="statsIconCol" style="flex:1">' + badIcon + '<div class="statsTextCol">Hard to Read</div></div></div>';
             }
             else{
-                output += '<td class="statsIconCol">' + goodIcon + '</td>' + '<td class="statsTextCol">Easy to Read</td></tr></table>';
+                output += '<div class="statsIconCol" style="flex:1">' + goodIcon + '<div class="statsTextCol">Easy to Read</div></div></div>';
             }
 
             let sentenceArray = myJson.summary_sentences;
@@ -111,7 +111,7 @@ const $ = window.jQuery;
             output += '</table>'
 
             return output;
-        } 
+        }
 
         //creates icon box for button
         let imgBox = '<img id="iconBox" src="https://i.imgur.com/Ab6y0Ca.png"/>';
@@ -127,7 +127,7 @@ const $ = window.jQuery;
         // If we are on the right page then send url to the backend and receive the summarised text
         if (($("h1").filter(function() {return (privacy.test($(this).text()) || terms.test($(this).text()))})).length > 0
         || ($("h2").filter(function() {return (privacy.test($(this).text()) || terms.test($(this).text()))})).length > 0
-        || privacy.test(currentUrl) || terms.test(currentUrl)) {   
+        || privacy.test(currentUrl) || terms.test(currentUrl)) {
             const backend = "https://d12aodjr8sssf3.cloudfront.net/?link=";
 
             // const popup = createPopup("Summary");
