@@ -47,10 +47,31 @@ const $ = window.jQuery;
                 return popup;
             }
 
-            const bannedSymbols = ['{', '}', "'", '"'];
+        const bannedSymbols = ['{', '}', "'", '"'];
+        const badIcon = '<img class="ratingIconBox" src=https://i.imgur.com/mkPw6cC.png />';
+        const goodIcon = '<img class="ratingIconBox" src=https://i.imgur.com/c6oqA2H.png />';
 
-        const cleanUp = (sentenceArray) => {
-            let output = '<table id="displayTable" style="width:100%">';
+        const cleanUp = (myJson) => {
+
+            let output = '<table id="statsTable" style="width:100%">';
+
+            if (myJson.complexity_score > 0.5){
+                output += '<tr id="statsRow"><td class="statsIconCol">' + badIcon + '</td>' + '<td class="statsTextCol">Complex</td>';
+            }
+            else{
+                output += '<tr id="statsRow"><td class="statsIconCol">' + goodIcon + '</td>' + '<td class="statsTextCol">Simple</td>';
+            }
+
+            let readable = (myJson.readability_score > 70) ? 1 : 0;
+            if (!readable){
+                output += '<td class="statsIconCol">' + badIcon + '</td>' + '<td class="statsTextCol">Hard to Read</td></tr></table>';
+            }
+            else{
+                output += '<td class="statsIconCol">' + goodIcon + '</td>' + '<td class="statsTextCol">Easy to Read</td></tr></table>';
+            }
+
+            let sentenceArray = myJson.summary_sentences;
+            output += '</tr></table><table id="summaryTable" style="width:100%">';
 
             for (let i = 0; i < sentenceArray.length; i++){
                 let clean = true;
@@ -61,26 +82,25 @@ const $ = window.jQuery;
                     }
                 }
                 if (clean){
-                    output += '<tr class="tableRows">'
+                    output += '<tr class="summaryRows">'
+
+                    let sentenceCol = '<td class="sentenceCol"><div class="sentenceBox">' + sentenceArray[i].text + '</div></td>';
+
                     let rating = sentenceArray[i].rating;
-                    //let ratingImgSrc = 'https://i.imgur.com/iRlDCDl.png';
-                    let ratingImgSrc = 'https://i.imgur.com/nsB6tkz.png';
-                    //let ratingImgSrc = 'https://i.imgur.com/r6Ul8JZ.png';
+                    let ratingImgSrc;
+
                     if (rating < 0){
-                        //ratingImgSrc = 'https://i.imgur.com/YJ347HA.png';
-                        //ratingImgSrc = 'https://i.imgur.com/EPJd3Bu.png';
                         ratingImgSrc = 'https://i.imgur.com/mkPw6cC.png';
                     }
                     else if (rating > 0){
-                        //ratingImgSrc = 'https://i.imgur.com/O8nj3ca.png';
-                        //ratingImgSrc = 'https://i.imgur.com/2AiTzKj.png';
                         ratingImgSrc = 'https://i.imgur.com/c6oqA2H.png';
                     }
-                    let ratingImgCol = '<td class="ratingIconCol"><img class="ratingIconBox" src="' + ratingImgSrc + '"/></td>'
-                    let sentenceCol = '<td class="sentenceCol"><div class="sentenceBox">' + sentenceArray[i].text + '</div></td>';
 
-                    if (rating != 0){
-                        output += ratingImgCol + sentenceCol;
+                    if (rating > 0){
+                        output += '<td class="ratingIconCol">' + goodIcon + '</td>' + sentenceCol;
+                    }
+                    else if (rating < 0){
+                        output += '<td class="ratingIconCol">' + badIcon + '</td>' + sentenceCol;
                     }
                     else{
                         output += '<td/>' + sentenceCol;
@@ -118,7 +138,7 @@ const $ = window.jQuery;
                 .then((response) => response.json())
                 .then((myJson) => {
                 console.log(myJson);
-                const popup = createPopup(cleanUp(myJson.summary_sentences));
+                const popup = createPopup(cleanUp(myJson));
                 document.body.appendChild(popup);
             });
 
@@ -177,7 +197,7 @@ const $ = window.jQuery;
             }
             #logoBox {
                 background:             transparent;
-                max-width:              10em;
+                max-height:             1.5em;
                 border:                 0;
                 margin-bottom:          0.1em;
             }
@@ -189,7 +209,7 @@ const $ = window.jQuery;
                 overflow-y:             scroll;
             }
 
-            #displayTable{
+            #summaryTable{
                 background:             #f7f7f7;
                 border:                 0;
             }
@@ -207,7 +227,7 @@ const $ = window.jQuery;
                 font-family:            'Karla';
                 font-size:              12px;
             }
-            .tableRows{
+            .summaryRows{
                 background:             #f7f7f7;
             }
             .ratingIconCol{
@@ -216,6 +236,10 @@ const $ = window.jQuery;
             .ratingIconBox{
                 max-height:             2em;
                 margin-top:             1em;
+            }
+
+            .statsTextCol{
+                vertical-align:         middle;
             }
         ` );
         }
