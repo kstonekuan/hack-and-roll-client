@@ -56,18 +56,18 @@ const $ = window.jQuery;
             let output = '<div id="statsTable" style="width:100%; display:flex; align-items:center;">';
 
             if (myJson.complexity_score > 0.5){
-                output += '<div class="statsIconCol">' + badIcon + '<div class="statsTextCol">Complex</div></div>';
+                output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + badIcon + '<div class="statsTextCol">Complex</div></div>';
             }
             else{
-                output += '<div class="statsIconCol">' + goodIcon + '<div class="statsTextCol">Simple</div></div>';
+                output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + goodIcon + '<div class="statsTextCol">Simple</div></div>';
             }
 
             let readable = (myJson.readability_score > 70) ? 1 : 0;
             if (!readable){
-                output += '<div class="statsIconCol">' + badIcon + '<div class="statsTextCol">Hard to Read</div></div></div>';
+                output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + badIcon + '<div class="statsTextCol">Hard to Read</div></div></div>';
             }
             else{
-                output += '<div class="statsIconCol">' + goodIcon + '<div class="statsTextCol">Easy to Read</div></div></div>';
+                output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + goodIcon + '<div class="statsTextCol">Easy to Read</div></div></div>';
             }
 
             let sentenceArray = myJson.summary_sentences;
@@ -153,7 +153,7 @@ const $ = window.jQuery;
                 border:                 0;
                 margin:                 0;
                 opacity:                0.9;
-                z-index:                9000;
+                z-index:                9999;
                 padding:                0;
             }
             #iconBtn {
@@ -169,7 +169,7 @@ const $ = window.jQuery;
                 position:               fixed;
                 top:                    28px;
                 right:                  10px;
-                z-index:                9000;
+                z-index:                9999;
                 border:                 1px outset black;
                 background:             #f7f7f7;
                 padding:                1em;
@@ -188,6 +188,7 @@ const $ = window.jQuery;
             }
             #logoBox {
                 background:             transparent;
+                width:                  auto;
                 max-height:             1.5em;
                 border:                 0;
                 margin-bottom:          0.1em;
@@ -227,16 +228,11 @@ const $ = window.jQuery;
             .ratingIconBox{
                 max-height:             2em;
                 margin-top:             1em;
+                width:                  auto;
             }
 
             .statsTextCol{
                 vertical-align:         middle;
-            }
-            .statsIconCol{
-                flex:                   1;
-                display:                flex;
-                align-items:            center;
-                flex-direction:         column;
             }
         ` );
         }
