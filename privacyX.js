@@ -91,8 +91,8 @@ const $ = window.jQuery;
         document.body.appendChild(zNode);
 
         // If we are on the right page then send url to the backend and receive the summarised text
-        if (($("h1").filter(function() {return privacy.test($(this).text())})).length > 0
-        || ($("h2").filter(function() {return privacy.test($(this).text())})).length > 0) {
+        if (($("h1").filter(function() {return (privacy.test($(this).text()) || terms.test($(this).text()))})).length > 0
+        || ($("h2").filter(function() {return (privacy.test($(this).text()) || terms.test($(this).text()))})).length > 0) {
             const currentUrl = window.location.href;
             const backend = "https://d12aodjr8sssf3.cloudfront.net/?link=";
 
