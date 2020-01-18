@@ -43,6 +43,29 @@ const $ = window.jQuery;
             return popup;
         }
 
+        const bannedSymbols = ['{','}',"'",'"'];
+
+        const cleanUp = (sentenceArray) => {
+            let output = '';
+
+            for (let i = 0; i < sentenceArray.length; i++){
+                let clean = true;
+                for (let j = 0; j < bannedSymbols.length; j++){
+                    if (sentenceArray[i].includes(bannedSymbols[j])){
+                        clean = false;
+                    }
+                }
+                if (clean){
+                    output += '<div class="sentenceBox">' + sentenceArray[i] + '</div>';
+                }
+            }
+
+            if (output.length == 0){
+                output = 'No valid content found';
+            }
+            return output;
+        } 
+
         //creates icon box for button
         let imgBox = '<img id="iconBox" src="https://i.imgur.com/Ab6y0Ca.png"/>';
 
@@ -66,7 +89,7 @@ const $ = window.jQuery;
                 .then((response) => response.json())
                 .then((myJson) => {
                 console.log(myJson);
-                const popup = createPopup(myJson.summary_sentences);
+                const popup = createPopup(cleanUp(myJson.summary_sentences));
                 document.body.appendChild(popup);
             });
 
@@ -89,11 +112,11 @@ const $ = window.jQuery;
                 top:                    2px;
                 right:                  10px;
                 background:             transparent;
-                border:                 0px;
-                margin:                 0px;
+                border:                 0;
+                margin:                 0;
                 opacity:                0.9;
-                z-index:                9999;
-                padding:                0px;
+                z-index:                9000;
+                padding:                0;
             }
             #iconBtn {
                 cursor:                 pointer;
@@ -108,29 +131,41 @@ const $ = window.jQuery;
                 position:               fixed;
                 top:                    28px;
                 right:                  10px;
-                z-index:                9999;
+                z-index:                9000;
                 border:                 1px outset black;
                 background:             #f7f7f7;
-                padding:                10px;
+                padding:                1em;
                 text-align:             center;
                 border-radius:          10px;
-                max-width:              320px;
+                max-width:              30em;
                 box-shadow:             1px 2px 4px rgba(0, 0, 0, 0.3);
             }
             #iconBox {
-                max-width:              16px;
-                max-height:             16px;
-                border:                 0px;
+                max-width:              1.5em;
+                max-height:             1.5em;
+                border:                 0;
             }
             #logoBox {
-                max-width:              120px;
-                border:                 0px;
-                margin-bottom:          10px;
+                text-align:             center;
+                background:             transparent;
+                max-width:              10em;
+                border:                 0;
+                margin-bottom:          0.1em;
             }
             #contentBox {
-                border:                 0px;
+                border:                 0;
                 font-family:            'Karla';
-                font-size:              18px;
+                font-size:              12px;
+            }
+            .sentenceBox{
+                border:                 1px #999999;
+                border-style:           solid;
+                background:             #fafafa;
+                padding:                0.5em 1em;
+                margin:                 0.5em 0.1em;
+                border-radius:          6px;
+                font-family:            'Karla';
+                font-size:              12px;
             }
         ` );
     });
