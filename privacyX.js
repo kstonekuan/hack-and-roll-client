@@ -36,7 +36,7 @@ const $ = window.jQuery;
             let popup = document.createElement('div');
 
             let logoBox = '<img id="logoBox" src="https://i.imgur.com/f2eUq0O.png"/>';
-            let contentBox = '<div id="contentBox">content</div>';
+            let contentBox = '<div id="contentBox">' + content + '</div>';
             popup.setAttribute('id', 'popup');
             popup.innerHTML = logoBox + '<br/>' + contentBox;
 
@@ -117,6 +117,7 @@ const $ = window.jQuery;
                 text-align:             center;
                 border-radius:          10px;
                 max-width:              320px;
+                box-shadow:             1px 2px 4px rgba(0, 0, 0, 0.3);
             }
             #iconBox {
                 max-width:              16px;
