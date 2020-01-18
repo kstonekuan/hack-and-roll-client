@@ -21,35 +21,15 @@ const $ = window.jQuery;
         const terms = /terms? ((((and|&) conditions)|(of (services?|use))))?/gmi;
         const privacy = /privacy|policy/gmi;
 
-        // If we are on the right page then send url to the backend and receive the summarised text
-        if (($("h1").filter(function() {return privacy.test($(this).text())})).length > 0
-        || ($("h2").filter(function() {return privacy.test($(this).text())})).length > 0) {
-            const currentUrl = window.location.href;
-            const backend = "https://52.74.226.98/?link=";
-            // POST url to backend
-            // If this method doesn't work try GM_xmlhttpRequest or $.ajax or fetch()
-            let xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = () => {
-                if (this.readyState == 4 && this.status == 200) {
-                    let popup = createPopup(xhttp.responseText);
-                }
-            };
-            xhttp.open("GET", backend + currentUrl, true);
-            xhttp.send();
-        }
-
         const findPrivacyLink = () => {
-            let link;
+            let links;
             // console.log($("a"));
-            $("a").each(function(index) {
-                // console.log( index + ": " + $( this ).text() );
-                if (($(this).text()).match(privacy)) {
-                    console.log($(this)[0]);
-                    $(this)[0].click();
-                    return "Moving to page";
-                }
-            });
-            return "No link to privacy policy page found."
+            if ((links = $("a").filter(function() {return privacy.test($(this).text())})).length > 0) {
+                // console.log(links);
+                links[0].click();
+                return "Moving to page"
+            }
+            return "No link to privacy policy page found"
         }
 
         const createPopup = (content) => {
@@ -72,11 +52,37 @@ const $ = window.jQuery;
         zNode.setAttribute('id', 'btnContainer');
         document.body.appendChild(zNode);
 
-        $('#iconBtn').on('click', () => {
-            let zNode = createPopup('Finding privacy policy page...');
-            document.body.appendChild(zNode);
-            //zNode = createPopup(findPrivacyLink());
-        });
+        // If we are on the right page then send url to the backend and receive the summarised text
+        if (($("h1").filter(function() {return privacy.test($(this).text())})).length > 0
+        || ($("h2").filter(function() {return privacy.test($(this).text())})).length > 0) {
+            const currentUrl = window.location.href;
+            const backend = "https://52.74.226.98/?link=";
+
+            const popup = createPopup("Summary");
+            document.body.appendChild(popup);
+            // POST url to backend
+            // If this method doesn't work try GM_xmlhttpRequest or $.ajax or fetch()
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = () => {
+                if (this.readyState == 4 && this.status == 200) {
+                    // const popup = createPopup(xhttp.responseText);
+                    // document.body.appendChild(popup);
+                }
+            };
+            xhttp.open("GET", backend + currentUrl, true);
+            xhttp.send();
+
+            $('#iconBtn').on('click', () => {
+                $("#popup").toggle();
+            });
+
+        } else {
+            $('#iconBtn').on('click', () => {
+                let zNode = createPopup('Finding privacy policy page...');
+                document.body.appendChild(zNode);
+                zNode = createPopup(findPrivacyLink());
+            });
+        }
 
         //--- Style our newly added elements using CSS.
         GM_addStyle(`
