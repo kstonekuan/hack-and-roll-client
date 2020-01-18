@@ -22,7 +22,7 @@ const $ = window.jQuery;
         const privacy = /privacy|policy/gmi;
 
         // If we are on the right page then send url to the backend and receive the summarised text
-        if ($("h1").filter(() => privacy.test($(this).text()))) {
+        if (($("h1").filter(function() {return privacy.test($(this).text())}).length > 0)) {
             const currentUrl = window.location.href;
             const backend = "https://52.74.226.98/?link=";
             // POST url to backend
@@ -43,8 +43,8 @@ const $ = window.jQuery;
             $("a").each(function(index) {
                 // console.log( index + ": " + $( this ).text() );
                 if (($(this).text()).match(privacy)) {
-                    console.log($(this));
-                    $(this).trigger("click");
+                    console.log($(this)[0]);
+                    $(this)[0].click();
                     return "Moving to page";
                 }
             });
