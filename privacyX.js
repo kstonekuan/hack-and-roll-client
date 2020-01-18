@@ -56,21 +56,19 @@ const $ = window.jQuery;
         if (($("h1").filter(function() {return privacy.test($(this).text())})).length > 0
         || ($("h2").filter(function() {return privacy.test($(this).text())})).length > 0) {
             const currentUrl = window.location.href;
-            const backend = "https://52.74.226.98/?link=";
+            const backend = "https://d12aodjr8sssf3.cloudfront.net/?link=";
 
-            const popup = createPopup("Summary");
-            document.body.appendChild(popup);
+            // const popup = createPopup("Summary");
+            // document.body.appendChild(popup);
             // POST url to backend
             // If this method doesn't work try GM_xmlhttpRequest or $.ajax or fetch()
-            let xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = () => {
-                if (this.readyState == 4 && this.status == 200) {
-                    // const popup = createPopup(xhttp.responseText);
-                    // document.body.appendChild(popup);
-                }
-            };
-            xhttp.open("GET", backend + currentUrl, true);
-            xhttp.send();
+            fetch(backend + currentUrl)
+                .then((response) => response.json())
+                .then((myJson) => {
+                console.log(myJson);
+                const popup = createPopup(myJson.summary_sentences);
+                document.body.appendChild(popup);
+            });
 
             $('#iconBtn').on('click', () => {
                 $("#popup").toggle();
