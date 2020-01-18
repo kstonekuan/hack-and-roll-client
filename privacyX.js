@@ -17,36 +17,37 @@ const $ = window.jQuery;
 
     // Your code here...
     $(document).ready(() => {
-        // Define regex for t&c and privacy policies
-        const terms = /terms? ((((and|&) conditions)|(of (services?|use))))?/gmi;
-        const privacy = /privacy|policy/gmi;
+        if (window.self === window.top) {
+            // Define regex for t&c and privacy policies
+            const terms = /terms? ((((and|&) conditions)|(of (services?|use))))?/gmi;
+            const privacy = /privacy|policy/gmi;
 
-        const findPrivacyLink = () => {
-            let links;
-            // console.log($("a"));
-            if ((links = $("a").filter(function() {return privacy.test($(this).text())})).length > 0) {
-                // console.log(links);
-                links[0].click();
-                setTimeout(() => window.location.reload(), 1000);
-                return "Moving to page"
+            const findPrivacyLink = () => {
+                let links;
+                // console.log($("a"));
+                if ((links = $("a").filter(function () { return privacy.test($(this).text()) })).length > 0) {
+                    // console.log(links);
+                    links[0].click();
+                    setTimeout(() => window.location.reload(), 1000);
+                    return "Moving to page"
+                }
+                $("#iconBtn").off()
+                $('#iconBtn').on('click', () => $("#popup").toggle());
+                return "No link to privacy policy page found"
             }
-            $("#iconBtn").off()
-            $('#iconBtn').on('click', () => $("#popup").toggle());
-            return "No link to privacy policy page found"
-        }
 
-        const createPopup = (content) => {
-            let popup = document.createElement('div');
+            const createPopup = (content) => {
+                let popup = document.createElement('div');
 
-            let logoBox = '<img id="logoBox" src="https://i.imgur.com/f2eUq0O.png"/>';
-            let contentBox = '<div id="contentBox">' + content + '</div>';
-            popup.setAttribute('id', 'popup');
-            popup.innerHTML = logoBox + '<br/>' + contentBox;
+                let logoBox = '<img id="logoBox" src="https://i.imgur.com/f2eUq0O.png"/>';
+                let contentBox = '<div id="contentBox">' + content + '</div>';
+                popup.setAttribute('id', 'popup');
+                popup.innerHTML = logoBox + '<br/>' + contentBox;
 
-            return popup;
-        }
+                return popup;
+            }
 
-        const bannedSymbols = ['{','}',"'",'"'];
+            const bannedSymbols = ['{', '}', "'", '"'];
 
         const cleanUp = (sentenceArray) => {
             let output = '<table id="displayTable" style="width:100%">';
@@ -117,8 +118,8 @@ const $ = window.jQuery;
             });
         }
 
-        //--- Style our newly added elements using CSS.
-        GM_addStyle(`
+            //--- Style our newly added elements using CSS.
+            GM_addStyle(`
             #btnContainer {
                 position:               fixed;
                 top:                    2px;
@@ -199,5 +200,6 @@ const $ = window.jQuery;
                 margin-top:             1em;
             }
         ` );
+        }
     });
 })();
