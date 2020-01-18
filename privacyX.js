@@ -27,8 +27,11 @@ const $ = window.jQuery;
             if ((links = $("a").filter(function() {return privacy.test($(this).text())})).length > 0) {
                 // console.log(links);
                 links[0].click();
+                setTimeout(() => window.location.reload(), 1000);
                 return "Moving to page"
             }
+            $("#iconBtn").off().then()
+            $('#iconBtn').on('click', () => $("#popup").toggle());
             return "No link to privacy policy page found"
         }
 
@@ -93,15 +96,13 @@ const $ = window.jQuery;
                 document.body.appendChild(popup);
             });
 
-            $('#iconBtn').on('click', () => {
-                $("#popup").toggle();
-            });
+            $('#iconBtn').on('click', () => $("#popup").toggle());
 
         } else {
             $('#iconBtn').on('click', () => {
                 let zNode = createPopup('Finding privacy policy page...');
                 document.body.appendChild(zNode);
-                zNode = createPopup(findPrivacyLink());
+                $('#contentBox').text(findPrivacyLink());
             });
         }
 
