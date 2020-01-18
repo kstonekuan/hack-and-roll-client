@@ -185,7 +185,7 @@ const $ = window.jQuery;
                 font-family:            'Karla';
                 font-size:              12px;
                 overflow-y:             scroll;
-                max-height:             95%;
+                max-height:             40em;
             }
 
             #displayTable{
