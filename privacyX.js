@@ -162,11 +162,13 @@ const $ = window.jQuery;
                 border:                 1px outset black;
                 background:             #f7f7f7;
                 padding:                1em;
-                text-align:             center;
+                align-items:          center;
                 border-radius:          10px;
                 max-width:              30em;
                 max-height:             80%;
                 box-shadow:             1px 2px 4px rgba(0, 0, 0, 0.3);
+                display:                flex;
+                flex-direction:         column;
             }
             #iconBox {
                 max-width:              1.5em;
@@ -174,7 +176,6 @@ const $ = window.jQuery;
                 border:                 0;
             }
             #logoBox {
-                text-align:             center;
                 background:             transparent;
                 max-width:              10em;
                 border:                 0;
@@ -184,8 +185,8 @@ const $ = window.jQuery;
                 border:                 0;
                 font-family:            'Karla';
                 font-size:              12px;
+                text-align:             center;
                 overflow-y:             scroll;
-                max-height:             40em;
             }
 
             #displayTable{
