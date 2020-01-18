@@ -30,21 +30,7 @@ const $ = window.jQuery;
             let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = () => {
                 if (this.readyState == 4 && this.status == 200) {
-<<<<<<< HEAD
-                    //create button to click to start chosen function;
-<<<<<<< HEAD
-                    let summary = createPopup(xhttp.responseText);
-=======
-                    //show summary
-                    let summary = document.createElement('div');
-                    summary.setAttribute('id', 'summary');
-                    console.log(xhttp.responseText);
-                    summary.innerHtml = xhttp.responseText;
-                    document.body.appendChild(zNode);
->>>>>>> Fixed finding the link element
-=======
                     let popup = createPopup(xhttp.responseText);
->>>>>>> Made popup prettier :)
                 }
             };
             xhttp.open("GET", backend + currentUrl, true);
