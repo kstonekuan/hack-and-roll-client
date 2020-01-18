@@ -188,7 +188,7 @@ const $ = window.jQuery;
             }
             #logoBox {
                 background:             transparent;
-width: auto;
+                width:                  auto;
                 max-height:             1.5em;
                 border:                 0;
                 margin-bottom:          0.1em;
@@ -228,7 +228,7 @@ width: auto;
             .ratingIconBox{
                 max-height:             2em;
                 margin-top:             1em;
-width: auto;
+                width:                  auto;
             }
 
             .statsTextCol{
