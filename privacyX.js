@@ -32,6 +32,7 @@ const $ = window.jQuery;
                 if (this.readyState == 4 && this.status == 200) {
 <<<<<<< HEAD
                     //create button to click to start chosen function;
+<<<<<<< HEAD
                     let summary = createPopup(xhttp.responseText);
 =======
                     //show summary
@@ -41,6 +42,9 @@ const $ = window.jQuery;
                     summary.innerHtml = xhttp.responseText;
                     document.body.appendChild(zNode);
 >>>>>>> Fixed finding the link element
+=======
+                    let popup = createPopup(xhttp.responseText);
+>>>>>>> Made popup prettier :)
                 }
             };
             xhttp.open("GET", backend + currentUrl, true);
@@ -63,8 +67,11 @@ const $ = window.jQuery;
 
         const createPopup = (content) => {
             let popup = document.createElement('div');
-            summary.setAttribute('id', 'popup');
-            summary.innerHtml = content;
+
+            let logoBox = '<img id="logoBox" src="https://i.imgur.com/f2eUq0O.png"/>';
+            let contentBox = '<div id="contentBox">content</div>';
+            popup.setAttribute('id', 'popup');
+            popup.innerHTML = logoBox + '<br/>' + contentBox;
             return popup;
         }
 
@@ -78,11 +85,9 @@ const $ = window.jQuery;
         document.body.appendChild(zNode);
 
         $('#myButton').on('click', () => {
-            let zNode = document.createElement('p');
-            zNode.setAttribute('id','popup');
-            zNode.innerHTML = 'Finding privacy policy page...';
+            let zNode = createPopup('Finding privacy policy page...');
             document.body.appendChild(zNode);
-            zNode.innerHTML = findPrivacyLink();
+            //zNode.innerHTML = createPopup(findPrivacyLink());
         });
 
         //--- Style our newly added elements using CSS.
@@ -105,11 +110,7 @@ const $ = window.jQuery;
                 color:                  red;
                 background:             white;
             }
-            #iconBox {
-                max-width:              16px;
-                max-height:             16px;
-                border:                 0px;
-            }
+
             #popup {
                 position:               fixed;
                 top:                    24px;
@@ -118,6 +119,20 @@ const $ = window.jQuery;
                 border:                 1px outset black;
                 background:             #f7f7f7;
                 padding:                10px;
+                text-align:             center;
+            }
+            #iconBox {
+                max-width:              16px;
+                max-height:             16px;
+                border:                 0px;
+            }
+            #logoBox {
+                max-width:              120px;
+                border:                 0px;
+                margin-bottom:          10px;
+            }
+            #contentBox {
+                border:                 0px;
             }
         ` );
     });
