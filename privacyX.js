@@ -102,10 +102,12 @@ const $ = window.jQuery;
         zNode.setAttribute('id', 'btnContainer');
         document.body.appendChild(zNode);
 
+        const currentUrl = window.location.href;
+
         // If we are on the right page then send url to the backend and receive the summarised text
         if (($("h1").filter(function() {return (privacy.test($(this).text()) || terms.test($(this).text()))})).length > 0
-        || ($("h2").filter(function() {return (privacy.test($(this).text()) || terms.test($(this).text()))})).length > 0) {
-            const currentUrl = window.location.href;
+        || ($("h2").filter(function() {return (privacy.test($(this).text()) || terms.test($(this).text()))})).length > 0
+        || privacy.test(currentUrl) || terms.test(currentUrl)) {   
             const backend = "https://d12aodjr8sssf3.cloudfront.net/?link=";
 
             // const popup = createPopup("Summary");
