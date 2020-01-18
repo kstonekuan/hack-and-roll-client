@@ -47,33 +47,33 @@ const $ = window.jQuery;
                 return popup;
             }
 
-            //const bannedSymbols = ['{', '}', "'", '"'];
-            const badIcon = '<img class="ratingIconBox" src=https://i.imgur.com/mkPw6cC.png />';
-            const goodIcon = '<img class="ratingIconBox" src=https://i.imgur.com/c6oqA2H.png />';
+        //const bannedSymbols = ['{', '}', "'", '"'];
+        const badIcon = '<img class="ratingIconBox" src=https://i.imgur.com/mkPw6cC.png />';
+        const goodIcon = '<img class="ratingIconBox" src=https://i.imgur.com/c6oqA2H.png />';
 
-            const cleanUp = (myJson) => {
-                
-                let output = '<div id="statsTable" style="width:100%; display:flex; align-items:center;">';
+        const cleanUp = (myJson) => {
 
-                if (myJson.complexity_score > 0.5) {
-                    output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + badIcon + '<div class="statsTextCol">Complex</div></div>';
-                }
-                else {
-                    output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + goodIcon + '<div class="statsTextCol">Simple</div></div>';
-                }
+            let output = '<div id="statsTable" style="width:100%; display:flex; align-items:center;">';
 
-                let readable = (myJson.readability_score > 70) ? 1 : 0;
-                if (!readable) {
-                    output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + badIcon + '<div class="statsTextCol">Hard to Read</div></div></div>';
-                }
-                else {
-                    output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + goodIcon + '<div class="statsTextCol">Easy to Read</div></div></div>';
-                }
+            if (myJson.complexity_score > 0.5){
+                output += '<div class="statsIconCol">' + badIcon + '<div class="statsTextCol">Complex</div></div>';
+            }
+            else{
+                output += '<div class="statsIconCol">' + goodIcon + '<div class="statsTextCol">Simple</div></div>';
+            }
 
-                let sentenceArray = myJson.summary_sentences;
-                output += '</tr></table><table id="summaryTable" style="width:100%">';
+            let readable = (myJson.readability_score > 70) ? 1 : 0;
+            if (!readable){
+                output += '<div class="statsIconCol">' + badIcon + '<div class="statsTextCol">Hard to Read</div></div></div>';
+            }
+            else{
+                output += '<div class="statsIconCol">' + goodIcon + '<div class="statsTextCol">Easy to Read</div></div></div>';
+            }
 
-                sentenceArray.forEach(sentence => {
+            let sentenceArray = myJson.summary_sentences;
+            output += '</tr></table><table id="summaryTable" style="width:100%">';
+
+            sentenceArray.forEach(sentence => {
                     output += '<tr class="summaryRows">'
 
                     let sentenceCol = '<td class="sentenceCol"><div class="sentenceBox">' + sentence.text + '</div></td>';
@@ -81,67 +81,67 @@ const $ = window.jQuery;
                     let rating = sentence.rating;
                     let ratingImgSrc;
 
-                    if (rating < 0) {
+                    if (rating < 0){
                         ratingImgSrc = 'https://i.imgur.com/mkPw6cC.png';
                     }
-                    else if (rating > 0) {
+                    else if (rating > 0){
                         ratingImgSrc = 'https://i.imgur.com/c6oqA2H.png';
                     }
 
-                    if (rating > 0) {
+                    if (rating > 0){
                         output += '<td class="ratingIconCol">' + goodIcon + '</td>' + sentenceCol;
                     }
-                    else if (rating < 0) {
+                    else if (rating < 0){
                         output += '<td class="ratingIconCol">' + badIcon + '</td>' + sentenceCol;
                     }
-                    else {
+                    else{
                         output += '<td/>' + sentenceCol;
                     }
                     output += '</tr>'
-                });
-                output += '</table>'
+            });
+            output += '</table>'
 
-                return output;
-            }
+            return output;
+        }
 
-            //creates icon box for button
-            let imgBox = '<img id="iconBox" src="https://i.imgur.com/Ab6y0Ca.png"/>';
+        //creates icon box for button
+        let imgBox = '<img id="iconBox" src="https://i.imgur.com/Ab6y0Ca.png"/>';
 
-            //create button to click to start chosen function;
-            let zNode = document.createElement('div');
-            zNode.innerHTML = '<button id="iconBtn" type="button">' + imgBox + '</button>';
-            zNode.setAttribute('id', 'btnContainer');
-            document.body.appendChild(zNode);
+        //create button to click to start chosen function;
+        let zNode = document.createElement('div');
+        zNode.innerHTML = '<button id="iconBtn" type="button">' + imgBox + '</button>';
+        zNode.setAttribute('id', 'btnContainer');
+        document.body.appendChild(zNode);
 
-            const currentUrl = window.location.href;
+        const currentUrl = window.location.href;
 
-            // If we are on the right page then send url to the backend and receive the summarised text
-            if (($("h1").filter(function () { return (privacy.test($(this).text()) || terms.test($(this).text())) })).length > 0
-                || ($("h2").filter(function () { return (privacy.test($(this).text()) || terms.test($(this).text())) })).length > 0
-                || privacy.test(currentUrl) || terms.test(currentUrl)) {
-                const backend = "https://d12aodjr8sssf3.cloudfront.net/?link=";
+        // If we are on the right page then send url to the backend and receive the summarised text
+        if (($("h1").filter(function() {return (privacy.test($(this).text()) || terms.test($(this).text()))})).length > 0
+        || ($("h2").filter(function() {return (privacy.test($(this).text()) || terms.test($(this).text()))})).length > 0
+        || privacy.test(currentUrl) || terms.test(currentUrl)) {
+            const backend = "https://d12aodjr8sssf3.cloudfront.net/?link=";
 
-                // const popup = createPopup("Summary");
-                // document.body.appendChild(popup);
-                // POST url to backend
-                // If this method doesn't work try GM_xmlhttpRequest or $.ajax or fetch()
-                fetch(backend + currentUrl)
-                    .then((response) => response.json())
-                    .then((myJson) => {
-                        console.log(myJson);
-                        const popup = createPopup(cleanUp(myJson));
-                        document.body.appendChild(popup);
-                    });
+            // const popup = createPopup("Summary");
+            // document.body.appendChild(popup);
+            // POST url to backend
+            // If this method doesn't work try GM_xmlhttpRequest or $.ajax or fetch()
+            fetch(backend + currentUrl)
+                .then((response) => response.json())
+                .then((myJson) => {
+                console.log(myJson);
+                const popup = createPopup(cleanUp(myJson));
+                document.body.appendChild(popup);
+            });
 
-                $('#iconBtn').on('click', () => $("#popup").toggle());
+            $('#iconBtn').on('click', () => $("#popup").toggle());
 
-            } else {
-                $('#iconBtn').on('click', () => {
-                    let zNode = createPopup('Finding privacy policy page...');
-                    document.body.appendChild(zNode);
-                    $('#contentBox').text(findPrivacyLink());
-                });
-            }
+        } else {
+            $('#iconBtn').on('click', () => {
+                let zNode = createPopup('Finding privacy policy page...');
+                document.body.appendChild(zNode);
+                $('#contentBox').text(findPrivacyLink());
+            });
+        }
 
             //--- Style our newly added elements using CSS.
             GM_addStyle(`
@@ -231,6 +231,12 @@ const $ = window.jQuery;
 
             .statsTextCol{
                 vertical-align:         middle;
+            }
+            .statsIconCol{
+                flex:                   1;
+                display:                flex;
+                align-items:            center;
+                flex-direction:         column;
             }
         ` );
         }
