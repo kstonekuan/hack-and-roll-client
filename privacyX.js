@@ -30,7 +30,7 @@ const $ = window.jQuery;
                 setTimeout(() => window.location.reload(), 1000);
                 return "Moving to page"
             }
-            $("#iconBtn").off().then()
+            $("#iconBtn").off()
             $('#iconBtn').on('click', () => $("#popup").toggle());
             return "No link to privacy policy page found"
         }
