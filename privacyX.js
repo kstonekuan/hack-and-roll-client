@@ -33,7 +33,7 @@ const $ = window.jQuery;
                 }
                 $("#iconBtn").off()
                 $('#iconBtn').on('click', () => $("#popup").toggle());
-                return "No link to privacy policy page found"
+                return '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + badIcon + '<div class="statsTextCol">No link to privacy policy page found</div></div></div>';
             }
 
             const createPopup = (content) => {
@@ -139,7 +139,7 @@ const $ = window.jQuery;
             $('#iconBtn').on('click', () => {
                 let zNode = createPopup('Finding privacy policy page...');
                 document.body.appendChild(zNode);
-                $('#contentBox').text(findPrivacyLink());
+                $('#contentBox').html(findPrivacyLink());
             });
         }
 
@@ -188,7 +188,7 @@ const $ = window.jQuery;
             }
             #logoBox {
                 background:             transparent;
-                width:                  auto;
+width: auto;
                 max-height:             1.5em;
                 border:                 0;
                 margin-bottom:          0.1em;
@@ -228,7 +228,7 @@ const $ = window.jQuery;
             .ratingIconBox{
                 max-height:             2em;
                 margin-top:             1em;
-                width:                  auto;
+width: auto;
             }
 
             .statsTextCol{
