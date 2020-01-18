@@ -59,6 +59,7 @@ const $ = window.jQuery;
             let contentBox = '<div id="contentBox">content</div>';
             popup.setAttribute('id', 'popup');
             popup.innerHTML = logoBox + '<br/>' + contentBox;
+
             return popup;
         }
 
@@ -67,46 +68,49 @@ const $ = window.jQuery;
 
         //create button to click to start chosen function;
         let zNode = document.createElement('div');
-        zNode.innerHTML = '<button id="myButton" type="button" class="bewton">' + imgBox + '</button>';
-        zNode.setAttribute('id', 'myContainer');
+        zNode.innerHTML = '<button id="iconBtn" type="button">' + imgBox + '</button>';
+        zNode.setAttribute('id', 'btnContainer');
         document.body.appendChild(zNode);
 
-        $('#myButton').on('click', () => {
+        $('#iconBtn').on('click', () => {
             let zNode = createPopup('Finding privacy policy page...');
             document.body.appendChild(zNode);
-            zNode.innerHTML = createPopup(findPrivacyLink());
+            //zNode = createPopup(findPrivacyLink());
         });
 
         //--- Style our newly added elements using CSS.
         GM_addStyle(`
-            #myContainer {
+            #btnContainer {
                 position:               fixed;
                 top:                    2px;
-                right:                  2px;
-                background:             white;
+                right:                  10px;
+                background:             transparent;
                 border:                 0px;
                 margin:                 0px;
                 opacity:                0.9;
                 z-index:                9999;
                 padding:                0px;
             }
-            .bewton {
+            #iconBtn {
                 cursor:                 pointer;
-            }
-            #myContainer p {
-                color:                  red;
                 background:             white;
+                border-radius:          4px;
+            }
+            #iconBtn:hover {
+                background:             #f7f7f7;
             }
 
             #popup {
                 position:               fixed;
-                top:                    24px;
-                right:                  2px;
+                top:                    28px;
+                right:                  10px;
                 z-index:                9999;
                 border:                 1px outset black;
                 background:             #f7f7f7;
                 padding:                10px;
                 text-align:             center;
+                border-radius:          10px;
+                max-width:              320px;
             }
             #iconBox {
                 max-width:              16px;
@@ -120,6 +124,8 @@ const $ = window.jQuery;
             }
             #contentBox {
                 border:                 0px;
+                font-family:            'Karla';
+                font-size:              18px;
             }
         ` );
     });
