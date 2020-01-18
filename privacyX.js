@@ -49,23 +49,34 @@ const $ = window.jQuery;
         const bannedSymbols = ['{','}',"'",'"'];
 
         const cleanUp = (sentenceArray) => {
-            let output = '';
+            let output = '<table id="displayTable" style="width:100%">';
 
             for (let i = 0; i < sentenceArray.length; i++){
                 let clean = true;
+                let rating = sentenceArray.rating;
                 for (let j = 0; j < bannedSymbols.length; j++){
-                    if (sentenceArray[i].includes(bannedSymbols[j])){
+                    if (sentenceArray[i].text.includes(bannedSymbols[j])){
                         clean = false;
                     }
                 }
                 if (clean){
-                    output += '<div class="sentenceBox">' + sentenceArray[i] + '</div>';
+                    output += '<tr class="tableRows">'
+                    let rating = sentenceArray[i].rating;
+                    let ratingImgSrc = 'https://i.imgur.com/iRlDCDl.png';
+                    if (rating < 0){
+                        ratingImgSrc = 'https://i.imgur.com/YJ347HA.png';
+                    }
+                    else if (rating > 0){
+                        ratingImgSrc = 'https://i.imgur.com/O8nj3ca.png';
+                    }
+                    let ratingImgCol = '<td class="ratingIconCol"><img class="ratingIconBox" src="' + ratingImgSrc + '"/></td>'
+                    let sentenceCol = '<td class="sentenceCol"><div class="sentenceBox">' + sentenceArray[i].text + '</div></td>';
+                    output += ratingImgCol + sentenceCol;
+                    output += '</tr>'
                 }
             }
+            output += '</table>'
 
-            if (output.length == 0){
-                output = 'No valid content found';
-            }
             return output;
         } 
 
@@ -158,6 +169,15 @@ const $ = window.jQuery;
                 font-family:            'Karla';
                 font-size:              12px;
             }
+
+            #displayTable{
+                background:             #f7f7f7;
+                border:                 0;
+            }
+            .sentenceCol{
+                width:                  95%;
+                vertical-align:         middle;
+            }
             .sentenceBox{
                 border:                 1px #999999;
                 border-style:           solid;
@@ -167,6 +187,16 @@ const $ = window.jQuery;
                 border-radius:          6px;
                 font-family:            'Karla';
                 font-size:              12px;
+            }
+            .tableRows{
+                background:             #f7f7f7;
+            }
+            .ratingIconCol{
+                vertical-align:         middle;
+            }
+            .ratingIconBox{
+                max-height:             1em;
+                margin-top:             1em;
             }
         ` );
     });
