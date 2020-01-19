@@ -114,31 +114,10 @@ const $ = window.jQuery;
                             const popup = createPopup(cleanUp(myJson));
                             document.body.appendChild(popup);
                         } else {
-                            const popup = createPopup(form);
-                            document.body.appendChild(popup);
-
-                            $('#formBtn').on('click', () => {
-                                console.log($('#texta').text());
-                                const data = { text: $('#texta').val() };
-                                fetch(backendText, {
-                                    method: 'POST', // or 'PUT'
-                                    mode: 'cors', // no-cors, *cors, same-origin
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(data),
-                                })
-                                    .then((response) => response.json())
-                                    .then((myJson) => {
-                                        console.log(myJson);
-                                        $('#contentBox').html(cleanUp(myJson));
-                                    })
-                                    .catch((error) => {
-                                        console.error('Error:', error);
-                                        $('#contentBox').html(form);
-                                    });
-                            });
+                            makeForm();
                         }
+                    }).catch(() => {
+                        makeForm();
                     });
 
                 $('#iconBtn').on('click', () => $("#popup").toggle());
@@ -153,13 +132,38 @@ const $ = window.jQuery;
 
             let form = `
                 <div class="statsIconCol">
-                    <div>Could not connect please insert text manually</div>
-                    <textarea id="texta" name="text"></textarea><br/>
-                    <button id='formBtn' type="button">Submit</button>
+                    <div>Could not connect please insert text manually</div> </br>
+                    <textarea id="texta" name="text"></textarea>
+                    <button id='formBtn' type="button" class="sentenceBox">Submit</button>
                 </div>
             `;
 
+            let makeForm = () => {
+                const popup = createPopup(form);
+                document.body.appendChild(popup);
 
+                $('#formBtn').on('click', () => {
+                    console.log($('#texta').text());
+                    const data = { text: $('#texta').val() };
+                    fetch(backendText, {
+                        method: 'POST', // or 'PUT'
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    })
+                        .then((response) => response.json())
+                        .then((myJson) => {
+                            console.log(myJson);
+                            $('#contentBox').html(cleanUp(myJson));
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                            $('#contentBox').html(form);
+                        });
+                });
+            }
 
 
 
