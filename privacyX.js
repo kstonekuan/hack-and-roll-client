@@ -29,7 +29,7 @@ const $ = window.jQuery;
                     // console.log(links);
                     links[0].click();
                     setTimeout(() => window.location.reload(), 1000);
-                    return "Moving to page"
+                    return '<div class="sentenceBox">Moving to page</div>'
                 }
                 $("#iconBtn").off()
                 $('#iconBtn').on('click', () => $("#popup").toggle());
