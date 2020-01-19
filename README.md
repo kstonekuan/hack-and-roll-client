@@ -1,6 +1,10 @@
 # PrivacyX
 
-NUS Hack&Roll 2020 Submission. PrivacyX summarises T&C and Privacy Policies into easily digestible summaries.
+NUS Hack&Roll 2020 Submission. PrivacyX uses Natural Language Processing to summarise wordy Privacy Policies into easily digestible summaries to help consumers understand their rights and avoid data exploitation . 
+
+Server code can be found here: <https://github.com/gabrielloye/hack-and-roll-server>
+
+Devpost link: <https://devpost.com/software/privacyx>
 
 ## Installation
 
