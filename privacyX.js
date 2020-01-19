@@ -55,51 +55,31 @@ const $ = window.jQuery;
 
             let output = '<div id="statsTable" style="width:100%; display:flex; align-items:center;">';
 
-            if (myJson.complexity_score > 0.5){
-                output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + badIcon + '<div class="statsTextCol">Complex</div></div>';
-            }
-            else{
-                output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + goodIcon + '<div class="statsTextCol">Simple</div></div>';
-            }
+            const complexIcon = myJson.complexity_score > 0.5 ? badIcon : goodIcon;
+            output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + complexIcon + '<div class="statsTextCol">Complexity: ' + parseInt(myJson.complexity_score*100) + '%</div></div>';
 
-            let readable = (myJson.readability_score > 70) ? 1 : 0;
-            if (!readable){
-                output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + badIcon + '<div class="statsTextCol">Hard to Read</div></div></div>';
-            }
-            else{
-                output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + goodIcon + '<div class="statsTextCol">Easy to Read</div></div></div>';
-            }
+            const readIcon = myJson.readability_score > 70 ? goodIcon : badIcon;
+            output += '<div class="statsIconCol" style="flex:1; display:flex; align-items:center; flex-direction:column">' + readIcon + '<div class="statsTextCol">Readability: ' + parseInt(myJson.readability_score) + '%</div></div></div>';
 
             let sentenceArray = myJson.summary_sentences;
-            output += '</tr></table><table id="summaryTable" style="width:100%">';
+            output += '<table id="summaryTable" style="width:100%">';
 
             sentenceArray.forEach(sentence => {
                     output += '<tr class="summaryRows">'
 
-                    let sentenceCol = '<td class="sentenceCol"><div class="sentenceBox">' + sentence.text + '</div></td>';
-
-                    let rating = sentence.rating;
-                    let ratingImgSrc;
-
-                    if (rating < 0){
-                        ratingImgSrc = 'https://i.imgur.com/mkPw6cC.png';
+                    if (sentence.rating > 0){
+                        output += '<td class="ratingIconCol">' + goodIcon + '</td>';
                     }
-                    else if (rating > 0){
-                        ratingImgSrc = 'https://i.imgur.com/c6oqA2H.png';
-                    }
-
-                    if (rating > 0){
-                        output += '<td class="ratingIconCol">' + goodIcon + '</td>' + sentenceCol;
-                    }
-                    else if (rating < 0){
-                        output += '<td class="ratingIconCol">' + badIcon + '</td>' + sentenceCol;
+                    else if (sentence.rating < 0){
+                        output += '<td class="ratingIconCol">' + badIcon + '</td>';
                     }
                     else{
-                        output += '<td/>' + sentenceCol;
+                        output += '<td/>';
                     }
-                    output += '</tr>'
+                    output += '<td class="sentenceCol"><div class="sentenceBox">' + sentence.text + '</div></td></tr>'
             });
-            output += '</table>'
+
+            output += '</table>';
 
             return output;
         }
