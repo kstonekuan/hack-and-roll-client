@@ -132,8 +132,8 @@ const $ = window.jQuery;
 
             let form = `
                 <div class="statsIconCol">
-                    <div>Could not connect please insert text manually</div> </br>
-                    <textarea id="texta" name="text"></textarea>
+                    <div style="padding: .2em;">Could not connect please insert text manually</div>
+                    <textarea id="texta" name="text" style="padding: .2em;"></textarea>
                     <button id='formBtn' type="button" class="sentenceBox">Submit</button>
                 </div>
             `;
