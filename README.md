@@ -1,6 +1,6 @@
 # PrivacyX
 
-NUS Hack&Roll 2020 Submission
+NUS Hack&Roll 2020 Submission. PrivacyX summarises T&C and Privacy Policies into easily digestible summaries.
 
 ## Installation
 

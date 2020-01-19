@@ -2,7 +2,7 @@
 // @name         PrivacyX
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  Summarise T&C and Privacy Policies into easily digestable summary.
+// @description  Summarise T&C and Privacy Policies into easily digestible summary.
 // @author       You
 // @include      http://*/*
 // @include      https://*/*
